@@ -12,7 +12,7 @@ public struct JSONRPCAPIClientRequest<Entity: Decodable>: APIClientRequest {
         self.method = method
         self.params = params
     }
-
+    public let API_key: String = "32f124fe-ccac-49bc-b741-bc4e0cb06a6b"
     public let id = UUID().uuidString
     public let method: String
     public let jsonrpc = "2.0"
@@ -23,6 +23,7 @@ public struct JSONRPCAPIClientRequest<Entity: Decodable>: APIClientRequest {
         case method
         case jsonrpc
         case params
+        case API_key
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -32,6 +33,7 @@ public struct JSONRPCAPIClientRequest<Entity: Decodable>: APIClientRequest {
         try container.encode(jsonrpc, forKey: .jsonrpc)
         let wrappedDict = params.map(EncodableWrapper.init(wrapped:))
         try container.encode(wrappedDict, forKey: .params)
+        try container.encode(API_key, forKey: .API_key)
     }
 }
 
